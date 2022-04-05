@@ -70,22 +70,24 @@
             <tr>
 
                 <td class="p-2"><label for="descripcion">Descripción:</label></td>
-                <td><input class="form-control" type="number" id="descripcion"
-                           placeholder="Descripción" name="descripcion"/></td>
+                <td>
+                	<textarea class="form-control" id="descripcion" name="descripcion" rows="4" cols="50"></textarea>
+                </td>
             </tr>
             <tr>
             	<td class="p-2"><label for="categoria">Categoria:</label></td>
             	<td>
-            		<!-- <select name="categoria">
-            			<c:forEach items="${categorias}" var="cat">
+            		<select name="categoria">
+            			<c:forEach items="${VO}" var="cat">
 							<option value="${cat.getId_categoria()}">${cat.getDet_categoria()}</option>
 						</c:forEach>
-					</select> -->
+					</select>
 				</td>
             </tr>
             <tr>
-                <td colspan="2"><input type="submit"
-                                       class="btn m-2 btn-success" value="Agregar"/></td>
+                <td colspan="2">
+                	<input type="submit" class="btn m-2 btn-success" value="Agregar"/>
+                </td>
             </tr>
         </table>
     </form>

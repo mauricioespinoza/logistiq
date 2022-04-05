@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoriaProducto {
-	private cat_Producto categoria;
+	private Categoria categoria;
 	private Producto producto;
 	
 }

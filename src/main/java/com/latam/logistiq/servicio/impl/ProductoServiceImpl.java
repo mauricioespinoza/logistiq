@@ -3,9 +3,7 @@ package com.latam.logistiq.servicio.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.latam.logistiq.modelo.CategoriaProducto;
 import com.latam.logistiq.modelo.Producto;
-import com.latam.logistiq.modelo.cat_Producto;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.latam.logistiq.LogistiqalApplication;
-import com.latam.logistiq.dao.CategoriaRepository;
 import com.latam.logistiq.dao.ProductoRepository;
 import com.latam.logistiq.servicio.ProductoService;
-import com.latam.logistiq.vo.CategoriaVO;
 import com.latam.logistiq.vo.NumberVO;
 import com.latam.logistiq.vo.ProductoVO;
 
@@ -31,10 +27,8 @@ public class ProductoServiceImpl implements ProductoService {
 	
 	@Autowired
 	ProductoRepository dao;
-	CategoriaRepository daoCat;
-
 	ProductoVO respuesta;
-	CategoriaVO respuesta1;
+	
 	@Override
 	@Transactional(readOnly = true)
 	public ProductoVO findAll() {
@@ -140,21 +134,6 @@ public class ProductoServiceImpl implements ProductoService {
 			log.trace("Producto Service: Error en getPageCount", e);
 		}
 		return respuesta;
-	}
-
-	@Override
-	public CategoriaVO listarCategoria() {
-		respuesta1 = new CategoriaVO(new ArrayList<cat_Producto>(), "Ha ocurrido un error", "102" );
-		try {
-			respuesta1.setCategorias(daoCat.listarCategorias());
-			System.out.println("daocat: "+daoCat.listarCategorias());
-			respuesta1.setMensaje(String.format("Se ha/n encontrado %d categoria/s", respuesta1.getCategorias().size()));
-			respuesta1.setCodigo("0");
-		} catch (Exception e) {
-			log.trace("Categoria Service: Error en busqueda", e);
-		}
-		System.out.println("Esto lo trae de DB se supone: "+daoCat.listarCategorias());
-		return respuesta1;
 	}
 
 }

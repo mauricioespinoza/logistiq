@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.latam.logistiq.servicio.CategoriaService;
 import com.latam.logistiq.servicio.ProductoService;
 import com.latam.logistiq.util.Util;
+import com.latam.logistiq.vo.CategoriaVO;
 import com.latam.logistiq.vo.ProductoVO;
-import com.latam.logistiq.modelo.cat_Producto;
+import com.latam.logistiq.modelo.Categoria;
 
 @Controller
 public class ProductoController {
@@ -30,6 +32,10 @@ public class ProductoController {
 
 	@Autowired
 	private ProductoService svc;
+	@Autowired
+	private CategoriaService svsCat;
+	
+	
 
 	@GetMapping({ "/", "/home"})
 	public String home(Model model, @RequestParam(defaultValue = "1") Integer p, @RequestParam(defaultValue = "5") Integer registros, @RequestParam(defaultValue = "") String busqueda) {
@@ -63,15 +69,19 @@ public class ProductoController {
 	}
 
 	@GetMapping("/agregarForm")
-	public String agregarForm(Model model) {
-		List<cat_Producto> ListaCategorias = new ArrayList<>();
-		System.out.println(svc.listarCategoria());
-		//model.addAttribute("categorias", ListaCategorias);
-		return "agregar";
+	public ModelAndView agregarForm(Model model) {
+		System.out.println(svsCat.listarCategoria());
+		CategoriaVO respuestaServicio = new CategoriaVO();
+		respuestaServicio.setMensaje("No se pueden agregar productos en este momento, intente mas tarde");
+		respuestaServicio = svsCat.listarCategoria();
+		model.addAttribute("mensaje", respuestaServicio.getMensaje());
+		model.addAttribute("VO", respuestaServicio.getCategorias());
+		return new ModelAndView("agregar");
 	}
 
 	@PostMapping("/agregar")
 	public ModelAndView agregarSubmit(@ModelAttribute Producto producto, RedirectAttributes ra) {
+		producto.setTipo_producto(1);
 		ProductoVO respuestaServicio = svc.add(producto);
 		ra.addFlashAttribute("mensaje", respuestaServicio.getMensaje());
 		if (respuestaServicio.getCodigo().equals("0")) {
