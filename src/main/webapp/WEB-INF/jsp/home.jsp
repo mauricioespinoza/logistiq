@@ -90,7 +90,8 @@
             <th scope="col">Nombre</th>
             <th scope="col">Precio</th>
             <th scope="col">Stock</th>
-            <th scope="col">Categoria</th>
+            <th scope="col">ID Categoria</th>
+            <th scope="col">Detalle Cat.</th>
             <th scope="col">Descripción</th>
             <th scope="col">Acciones</th>
         </tr>
@@ -103,6 +104,15 @@
                 <td>${u.getPrecio()}</td>
                 <td>${u.getStock()}</td>
                 <td>${u.getTipo_producto()}</td>
+                <td>
+                	<c:set var="Tipo_prod" value="${u.getTipo_producto()}"/>
+                	<c:forEach items="${DetalleCat}" var="cat">
+                		<c:set var="ID_cat" value="${cat.getId_categoria()}"/>
+                		<%if (pageContext.getAttribute("Tipo_prod") == pageContext.getAttribute("ID_cat")){%>
+                			${cat.getDet_categoria()}
+                		<% }%>
+                	</c:forEach>
+                </td>
                 <td>${u.getDescripcion()}</td>
                 <td>
                     <a href="editarForm?idProducto=${u.getIdProducto()}" class="btn btn-primary btn-sm">Editar</a>

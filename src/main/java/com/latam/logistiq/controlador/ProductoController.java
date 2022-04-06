@@ -40,20 +40,26 @@ public class ProductoController {
 	@GetMapping({ "/", "/home"})
 	public String home(Model model, @RequestParam(defaultValue = "1") Integer p, @RequestParam(defaultValue = "5") Integer registros, @RequestParam(defaultValue = "") String busqueda) {
 		log.info("model "+model);
+		CategoriaVO respuestaCat = new CategoriaVO();
+		respuestaCat = svsCat.listarCategoria();
 		Integer totalPaginas = (int) svc.getPageCount(registros).getValor();
 		model.addAttribute("paginas", Util.getArregloPaginas(p, totalPaginas));
 		model.addAttribute("paginaActual", p);
 		model.addAttribute("VO", svc.getPage(p-1, registros, busqueda));
+		model.addAttribute("DetalleCat", respuestaCat.getCategorias());
 		return "home";
 	}
 
 	@GetMapping("/editarForm")
 	public ModelAndView editarForm(Model model, @RequestParam Integer idProducto, RedirectAttributes ra) {
+		CategoriaVO respuestaCat = new CategoriaVO();
+		respuestaCat = svsCat.listarCategoria();
 		ProductoVO respuestaServicio = new ProductoVO();
 		respuestaServicio.setMensaje("No se pudo cargar la vista de edición, intente nuevamente.");
 		respuestaServicio = svc.findById(idProducto);
 		model.addAttribute("mensaje", respuestaServicio.getMensaje());
 		model.addAttribute("VO", respuestaServicio.getProductos().get(0));
+		model.addAttribute("CAT", respuestaCat.getCategorias());
 		return new ModelAndView("editar");
 	}
 
@@ -70,7 +76,6 @@ public class ProductoController {
 
 	@GetMapping("/agregarForm")
 	public ModelAndView agregarForm(Model model) {
-		System.out.println(svsCat.listarCategoria());
 		CategoriaVO respuestaServicio = new CategoriaVO();
 		respuestaServicio.setMensaje("No se pueden agregar productos en este momento, intente mas tarde");
 		respuestaServicio = svsCat.listarCategoria();
@@ -81,7 +86,6 @@ public class ProductoController {
 
 	@PostMapping("/agregar")
 	public ModelAndView agregarSubmit(@ModelAttribute Producto producto, RedirectAttributes ra) {
-		producto.setTipo_producto(1);
 		ProductoVO respuestaServicio = svc.add(producto);
 		ra.addFlashAttribute("mensaje", respuestaServicio.getMensaje());
 		if (respuestaServicio.getCodigo().equals("0")) {

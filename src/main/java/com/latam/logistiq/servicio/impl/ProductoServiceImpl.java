@@ -27,6 +27,7 @@ public class ProductoServiceImpl implements ProductoService {
 	
 	@Autowired
 	ProductoRepository dao;
+	
 	ProductoVO respuesta;
 	
 	@Override

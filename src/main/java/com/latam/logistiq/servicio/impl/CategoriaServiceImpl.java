@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.latam.logistiq.LogistiqalApplication;
 import com.latam.logistiq.dao.CategoriaRepository;
 import com.latam.logistiq.modelo.Categoria;
+import com.latam.logistiq.modelo.Producto;
 import com.latam.logistiq.servicio.CategoriaService;
 import com.latam.logistiq.vo.CategoriaVO;
 
@@ -37,48 +38,19 @@ public class CategoriaServiceImpl implements CategoriaService {
 			}
 			return respuesta1;
 	}
-	/*
-	 * String sql ="select * from categoria";
-		List<Categoria> ListaCategorias = new ArrayList<>();
-		
-		try {
-			pstm = conn.prepareStatement(sql);
-			rs = pstm.executeQuery();
-			while (rs.next()) {
-				Categoria categoria = new Categoria();
-				categoria.setId_categoria(rs.getInt("id_categoria"));
-				categoria.setNombre_categoria(rs.getString("nombre_categoria"));
-				ListaCategorias.add(categoria);
-			}
-		} 
-		catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		return ListaCategorias;
-	 * */
-	
 
 	@Override
-	public CategoriaVO buscarCategoria(int id) {
-		return respuesta1;
-		/*String sql ="select * from categoria where id_categoria = ?";
-		Categoria categoria = new Categoria();
+	public CategoriaVO buscarCategoria(int id_categoria) {
+		respuesta1 = new CategoriaVO(new ArrayList<Categoria>(), "Ha ocurrido un error", "102" );
 		try {
-			pstm = conn.prepareStatement(sql);
-			pstm.setInt(1, id_categoria);
-			rs = pstm.executeQuery();
-			if (rs.next()) {
-				categoria.setId_categoria(rs.getInt("id_categoria"));
-				categoria.setNombre_categoria(rs.getString("nombre_categoria"));
-			}
-		} 
-		catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			Categoria categoria = daoCat.findById(id_categoria).get();
+			respuesta1.getCategorias().add(categoria);
+			respuesta1.setMensaje("");
+			respuesta1.setCodigo("0");
+		} catch (Exception e) {
+			log.trace("Producto Service: Error en findAllByNombreAndClave", e);
 		}
-		
-		return categoria;*/
+		return respuesta1;
 	}
 
 }

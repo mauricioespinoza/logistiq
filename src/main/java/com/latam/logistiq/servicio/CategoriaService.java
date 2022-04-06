@@ -5,6 +5,6 @@ import com.latam.logistiq.vo.CategoriaVO;
 
 public interface CategoriaService {
 	public CategoriaVO listarCategoria();
-	public CategoriaVO buscarCategoria(int id);
+	public CategoriaVO buscarCategoria(int id_categoria);
 
 }

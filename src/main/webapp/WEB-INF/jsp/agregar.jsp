@@ -37,12 +37,12 @@
             <tr>
                 <td class="p-2"><label for="codigo">Código:</label></td>
                 <td><input class="form-control" type="text" name="codigo" id="codigo"
-                           placeholder="Código"/></td>
+                           placeholder="Código" required/></td>
             </tr>
             <tr>
                 <td class="p-2"><label for="nombre">Nombre:</label></td>
                 <td><input class="form-control" type="text" id="nombre"
-                           placeholder="Nombre" name="nombre"/></td>
+                           placeholder="Nombre" name="nombre" required/></td>
             </tr>
             <tr>
 
@@ -55,7 +55,7 @@
                         </div>
                         <input type="number" class="form-control"
                                name="precio" id="precio"
-                               placeholder="Precio">
+                               placeholder="Precio" required/>
                     </div>
 
 
@@ -65,19 +65,19 @@
 
                 <td class="p-2"><label for="stock">Stock:</label></td>
                 <td><input class="form-control" type="number" id="stock"
-                           placeholder="Stock" name="stock"/></td>
+                           placeholder="Stock" name="stock" required/></td>
             </tr>
             <tr>
 
                 <td class="p-2"><label for="descripcion">Descripción:</label></td>
                 <td>
-                	<textarea class="form-control" id="descripcion" name="descripcion" rows="4" cols="50"></textarea>
+                	<textarea class="form-control" id="descripcion" name="descripcion" rows="4" cols="50" required></textarea>
                 </td>
             </tr>
             <tr>
-            	<td class="p-2"><label for="categoria">Categoria:</label></td>
+            	<td class="p-2"><label for="tipo_producto">Categoria:</label></td>
             	<td>
-            		<select name="categoria">
+            		<select name="tipo_producto" class="form-control">
             			<c:forEach items="${VO}" var="cat">
 							<option value="${cat.getId_categoria()}">${cat.getDet_categoria()}</option>
 						</c:forEach>
